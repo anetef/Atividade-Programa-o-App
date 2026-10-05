@@ -31,12 +31,20 @@ function adicionarMeses(data: Date, quantidade: number) {
 }
 
 export default function Index() {
+  const [nome, setNome] = useState('');
   const [dia, setDia] = useState('');
   const [mes, setMes] = useState('');
   const [ano, setAno] = useState('');
   const [resultado, setResultado] = useState('');
 
   function calcularIdade() {
+    const nomeFormatado = nome.trim().replace(/\s+/g, ' ');
+
+    if (nomeFormatado === '') {
+      Alert.alert('Nome obrigatório', 'Informe seu nome para continuar.');
+      return;
+    }
+
     const d = Number(dia);
     const m = Number(mes);
     const a = Number(ano);
@@ -100,6 +108,7 @@ export default function Index() {
     const anos = Math.floor(totalMeses / 12);
     const meses = totalMeses % 12;
 
+    setNome(nomeFormatado);
     setResultado(
       `${anos} ${anos === 1 ? 'ano' : 'anos'}, ` +
         `${meses} ${meses === 1 ? 'mês' : 'meses'} e ` +
@@ -111,9 +120,29 @@ export default function Index() {
     <SafeAreaView style={styles.container}>
       <View style={styles.card}>
         <Text style={styles.titulo}>Calculadora de idade</Text>
+
         <Text style={styles.descricao}>
-          Informe sua data de nascimento
+          Informe seu nome e sua data de nascimento
         </Text>
+
+        <Text style={styles.label}>Seu nome</Text>
+
+        <TextInput
+          style={styles.inputNome}
+          placeholder="Digite seu nome"
+          placeholderTextColor="#64748b"
+          autoCapitalize="words"
+          autoCorrect={false}
+          maxLength={100}
+          value={nome}
+          onChangeText={(texto) => {
+            setNome(texto);
+            setResultado('');
+          }}
+          accessibilityLabel="Seu nome"
+        />
+
+        <Text style={styles.label}>Data de nascimento</Text>
 
         <View style={styles.campos}>
           <TextInput
@@ -172,7 +201,9 @@ export default function Index() {
 
         {resultado !== '' && (
           <View style={styles.resultado}>
-            <Text style={styles.rotulo}>Sua idade hoje é</Text>
+            <Text style={styles.rotulo}>
+              {nome}, sua idade hoje é
+            </Text>
             <Text style={styles.idade}>{resultado}</Text>
           </View>
         )}
@@ -206,6 +237,23 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#64748b',
     marginBottom: 24,
+  },
+  label: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: '#334155',
+    marginBottom: 8,
+  },
+  inputNome: {
+    borderWidth: 1,
+    borderColor: '#cbd5e1',
+    borderRadius: 12,
+    paddingHorizontal: 14,
+    paddingVertical: 14,
+    fontSize: 18,
+    color: '#0f172a',
+    backgroundColor: '#f8fafc',
+    marginBottom: 20,
   },
   campos: {
     flexDirection: 'row',
@@ -251,8 +299,9 @@ const styles = StyleSheet.create({
   },
   rotulo: {
     color: '#64748b',
-    fontSize: 14,
+    fontSize: 16,
     marginBottom: 8,
+    textAlign: 'center',
   },
   idade: {
     color: '#3730a3',
