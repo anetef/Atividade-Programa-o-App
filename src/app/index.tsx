@@ -55,7 +55,7 @@ export default function Index() {
       !/^\d{4}$/.test(ano) ||
       a < 1
     ) {
-      Alert.alert('Data inválida', 'Preencha o dia, o mês e o ano completo.');
+      Alert.alert('Data inválida', 'Preencha o dia, o mês e o ano completo!.');
       return;
     }
 
@@ -68,7 +68,7 @@ export default function Index() {
       nascimento.getMonth() !== m - 1 ||
       nascimento.getDate() !== d
     ) {
-      Alert.alert('Data inválida', 'Informe uma data de nascimento válida.');
+      Alert.alert('Data inválida', 'Informe uma data de nascimento válida!.');
       return;
     }
 
@@ -80,7 +80,7 @@ export default function Index() {
     );
 
     if (nascimento > hoje) {
-      Alert.alert('Data inválida', 'O nascimento não pode estar no futuro.');
+      Alert.alert('Data inválida', 'O nascimento não pode estar no futuro!.');
       return;
     }
 
@@ -122,7 +122,7 @@ export default function Index() {
         <Text style={styles.titulo}>Calculadora de idade</Text>
 
         <Text style={styles.descricao}>
-          Informe seu nome e sua data de nascimento
+          Com gentileza informe seu nome e sua data de nascimento
         </Text>
 
         <Text style={styles.label}>Seu nome</Text>
